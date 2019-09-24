@@ -23,11 +23,14 @@ fn main() {
     }
 }
 
-fn ping_many_times(x: i32) {
+fn get_url() -> String {
     let args: Vec<String> = env::args().collect();
-    let url               = &args[1];
+    let url = args[1].to_string();
+    return url; 
+}
 
-    let response = DefaultHttpRequest::get_from_url_str(&url)
+fn ping_many_times(x: i32) {
+    let response = DefaultHttpRequest::get_from_url_str(get_url())
                        .unwrap()
                        .send  ()
                        .unwrap();
