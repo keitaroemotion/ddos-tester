@@ -2,10 +2,10 @@ extern crate easy_http_request;
 extern crate regex;
 
 use easy_http_request::DefaultHttpRequest;
+use regex::Regex;
 use std::env;
 use std::process;
 use std::{thread, time};
-use regex::Regex;
 
 // XXX: remotely call bot servers and deploy this script and dependencies
 // XXX: remotely call bot servers and execute this program simultaneously
