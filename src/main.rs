@@ -1,14 +1,18 @@
 extern crate easy_http_request;
+extern crate regex;
 
 use easy_http_request::DefaultHttpRequest;
 use std::env;
+use std::process;
 use std::{thread, time};
+use regex::Regex;
 
 // XXX: remotely call bot servers and deploy this script and dependencies
 // XXX: remotely call bot servers and execute this program simultaneously
 
 fn main() {
     //let handles = (0..200)
+    get_url();
     let handles = (0..2)
         .into_iter()
         .map(|x| {
@@ -25,7 +29,20 @@ fn main() {
 
 fn get_url() -> String {
     let args: Vec<String> = env::args().collect();
+
+    if(args.len() < 2) {
+        println!("\nURL missing!\n");
+        process::exit(0x0100);         
+    }
+
     let url = args[1].to_string();
+    let re  = Regex::new(r"^http[s]{0,1}://").unwrap();
+
+    if(!re.is_match(&url)) {
+        println!("\nURL invalid! (http(s)://...)\n");
+        process::exit(0x0100);         
+    }
+
     return url; 
 }
 

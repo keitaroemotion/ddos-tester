@@ -6,3 +6,4 @@ edition = "2018"
 
 [dependencies]
 easy-http-request = "0.2.5"
+regex = "1"
