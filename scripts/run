@@ -1,0 +1,5 @@
+rm -rf bin
+mkdir -p bin
+sudo cargo build
+mv target/debug/ddos-tester bin
+sudo ./bin/ddos-tester $@
