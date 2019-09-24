@@ -1,0 +1,55 @@
+(Can choose companies) = company aux
+
+In Free plan(15 days trial period,) you can choose maximum 10 functions
+
+Sales
+
+Inventory
+  - Receipts
+  - Delivery Orders
+  - PoS Orders
+
+CRM
+- New
+  {Opportunity, Customer, Expected_Revenue}
+- Qualified
+- Proposition
+- Won
+
+Accounting
+- Customer Invoices [Sales]
+    (+) new invoice
+- Bank
+    # balance in GL \0
+    ()  create or import statements
+    (+) configure
+        - add bank account (JAPAN/Worldwide)
+          - search for bank institution (so they offer query search)
+- Vendor Bills [purchase]
+    (+) upload bills
+    # 0 bills to validate
+    # 0 bills to pay
+- Cash [Cash]
+    # balance in GL \0
+    (+) new transactions
+- Miscellaneous Operations [Miscellaneous]
+    (+) new entry
+    # Tax reort
+- Point of Sale [Sales]
+    (+) new invoice
+
+* three dots (...)
+    sich as ...
+
+    - View
+       - Bills 
+       - Credit Notes
+       - Payments Matching  
+    - New
+       - Bill
+       - Credit Note Bill
+    - Reporting
+       - Bills Analysis
+       - Aged Payables
+
+    - Settings

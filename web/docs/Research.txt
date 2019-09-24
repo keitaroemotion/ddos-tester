@@ -1,0 +1,82 @@
+## Requirement
+
+- Utility
+
+- Customizability
+    - blockchain
+
+## What is ERP?
+ERPを一言で説明すると、財務会計、生産管理、販売管理といった企業の基幹業務をサポートするための業務システム
+
+## SAP
+
+## Microsoft Dynamics
+
+## Oracle
+### Oracle Netsuite
+SRP, E-COMMERCE, CRM, ERP, MANUFACTURING
+https://www.netsuite.com/portal/products/erp/financial-management.shtml
+
+Pain Points
+    - Cumbersome reporting
+    - Reliance on Instincts
+    - Spreadsheets
+        ex: cash management, corporate performance management, commodity management, credit management
+    - Data but no insights
+        ex: cash management, budgeting, financial planning
+
+= machine learning
+= blockchain
+= advanced analytics
+
+## ADempiere(Opensource)
+## Apache OFBiz(Opensource)
+## Dolibarr(Opensource)
+## ERPNext(Opensource)
+## Metasfresh(Opensource)
+## Odoo(Opensource)
+## Opentaps(Opensource)
+## WebERP(Opensource)
+
+## ZAC
+
+- transparency
+    - profits per segement
+    - integrated management of sections
+    - deficit/surplus
+
+- management of
+    - sales
+    - purchase 
+    - man-hour
+    - attendance
+    - expense
+    - process
+    - accounting
+
+- manage per project
+- query per {key}
+
+iOS/Android support
+
+https://www.oro.com/zac/products/ad_system.html
+
+## SCM
+#### Supply Chain Management
+- inventory control
+- warehousing
+- packaging
+- logistics
+
+[basic]
+raw-material-producer <> manufacuturer <> distributor <> retailer <> retail-custmer
+
+https://searcherp.techtarget.com/definition/supply-chain-management-SCM
+
+## ideas
+
++ add machine learning (AI)
++ add blockchain
+
+
+https://www.coso.org/Pages/guidance.aspx
