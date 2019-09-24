@@ -11,7 +11,10 @@ use regex::Regex;
 // XXX: remotely call bot servers and execute this program simultaneously
 
 fn main() {
-    read_line(get_url());
+    if read_line(get_url()) == "" {
+        println!("\nYou stoped attacking the website.\n");
+        process::exit(0x0100);         
+    }
 
     let handles = (0..200)
         .into_iter()
@@ -30,7 +33,13 @@ fn main() {
 fn read_line(url: String) -> String {
     use std::io::{stdin,stdout,Write};
     let mut s = String::new();
-    print!("\n[Warning!] attacking the website '{}' can offend the law of your country. \n\nAre you still okay to keep on doing this? [Y/n]: ", &url);
+    print!(
+        "\n[Warning!] attacking the website '{}' can offend the law \
+        of your country. \n\nAre you still okay to keep on doing this?\
+        [Y/n]: ",
+        &url
+    );
+
     let _ = stdout().flush();
     stdin().read_line(&mut s).expect("Did not enter a correct string");
 
@@ -41,13 +50,18 @@ fn read_line(url: String) -> String {
     if let Some('\r')=s.chars().next_back() {
         s.pop();
     }
+
+    if &s == "n" {
+        return String::from("");
+    }
+
     return s;
 }
 
 fn get_url() -> String {
     let args: Vec<String> = env::args().collect();
 
-    if(args.len() < 2) {
+    if args.len() < 2 {
         println!("\nURL missing!\n");
         process::exit(0x0100);         
     }
@@ -55,7 +69,7 @@ fn get_url() -> String {
     let url = args[1].to_string();
     let re  = Regex::new(r"^http[s]{0,1}://").unwrap();
 
-    if(!re.is_match(&url)) {
+    if !re.is_match(&url) {
         println!("\nURL invalid! (http(s)://...)\n");
         process::exit(0x0100);         
     }
