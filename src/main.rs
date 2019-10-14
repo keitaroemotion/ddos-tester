@@ -17,13 +17,13 @@ fn main() {
     }
 
     let handles = (0..200)
-        .into_iter()
-        .map(|x| {
-            thread::spawn(move || {
-                ping_many_times(x);
-            })
-        })
-        .collect::<Vec<_>>();
+                      .into_iter()
+                      .map(|x| {
+                          thread::spawn(move || {
+                              ping_many_times(x);
+                          })
+                      })
+                      .collect::<Vec<_>>();
 
     for thread in handles {
         thread.join().unwrap();
@@ -70,8 +70,9 @@ fn get_url() -> String {
     let re  = Regex::new(r"^http[s]{0,1}://").unwrap();
 
     if !re.is_match(&url) {
-        println!("\nURL invalid! (http(s)://...)\n");
-        process::exit(0x0100);         
+        //println!("\nURL invalid! (http(s)://...)\n");
+        //process::exit(0x0100);         
+        return format!("https://{}", url);
     }
 
     return url; 
