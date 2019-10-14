@@ -60,18 +60,24 @@ fn read_line(url: String) -> String {
 
 fn get_url() -> String {
     let args: Vec<String> = env::args().collect();
+    let mut options        = &args
+                               .iter()
+                               .filter(|arg| arg.starts_with("--"));
 
-    if args.len() < 2 {
+    let _args: Vec<String> = args
+                                 .into_iter()
+                                 .filter(|arg| !arg.starts_with("--"))
+                                 .collect();
+
+    if _args.len() < 2 {
         println!("\nURL missing!\n");
         process::exit(0x0100);         
     }
 
-    let url = args[1].to_string();
+    let url = _args[1].to_string();
     let re  = Regex::new(r"^http[s]{0,1}://").unwrap();
 
     if !re.is_match(&url) {
-        //println!("\nURL invalid! (http(s)://...)\n");
-        //process::exit(0x0100);         
         return format!("https://{}", url);
     }
 
