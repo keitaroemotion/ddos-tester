@@ -1,9 +1,10 @@
 extern crate easy_http_request;
 extern crate regex;
 
+mod args;
+
 use easy_http_request::DefaultHttpRequest;
 use regex::Regex;
-use std::env;
 use std::process;
 use std::{thread, time};
 
@@ -58,24 +59,8 @@ fn read_line(url: String) -> String {
     return s;
 }
 
-fn parse_args() -> (Vec<String>, Vec<String>) {
-    let args: Vec<String> = env::args().collect();
-    let options           = args
-                                .into_iter()
-                                .filter(|arg| arg.starts_with("--"))
-                                .collect();
-
-    let args: Vec<String> = env::args().collect();
-    let _args             = args
-                                .into_iter()
-                                .filter(|arg| !arg.starts_with("--"))
-                                .collect();
-
-    return (options, _args)
-}
-
 fn get_url() -> String {
-    let (_options, _args) = parse_args();
+    let (_options, _args) = args::parse();
 
     if _args.len() < 2 {
         println!("\nURL missing!\n");
