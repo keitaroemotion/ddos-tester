@@ -2,6 +2,7 @@ extern crate easy_http_request;
 extern crate regex;
 
 mod args;
+mod io;
 
 use easy_http_request::DefaultHttpRequest;
 use regex::Regex;
@@ -12,7 +13,7 @@ use std::{thread, time};
 // XXX: remotely call bot servers and execute this program simultaneously
 
 fn main() {
-    if read_line(get_url()) == "" {
+    if io::read_line(get_url()) == "" {
         println!("\nYou stoped attacking the website.\n");
         process::exit(0x0100);         
     }
@@ -29,34 +30,6 @@ fn main() {
     for thread in handles {
         thread.join().unwrap();
     }
-}
-
-fn read_line(url: String) -> String {
-    use std::io::{stdin,stdout,Write};
-    let mut s = String::new();
-    print!(
-        "\n[Warning!] attacking the website '{}' can offend the law \
-        of your country. \n\nAre you still okay to keep on doing this?\
-        [Y/n]: ",
-        &url
-    );
-
-    let _ = stdout().flush();
-    stdin().read_line(&mut s).expect("Did not enter a correct string");
-
-    if let Some('\n')=s.chars().next_back() {
-        s.pop();
-    }
-
-    if let Some('\r')=s.chars().next_back() {
-        s.pop();
-    }
-
-    if &s == "n" {
-        return String::from("");
-    }
-
-    return s;
 }
 
 fn get_url() -> String {

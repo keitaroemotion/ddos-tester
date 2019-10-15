@@ -15,5 +15,3 @@ pub fn parse() -> (Vec<String>, Vec<String>) {
 
     return (options, _args)
 }
-
-
