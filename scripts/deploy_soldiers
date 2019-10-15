@@ -1,0 +1,9 @@
+ARGS=$(cat soldiers/config)
+ARGS_ARRAY=($ARGS)
+echo "-------"
+USERNAME=${ARGS_ARRAY[0]}
+IP=${ARGS_ARRAY[1]}
+HOMEDIR=${ARGS_ARRAY[2]}
+KEYPATH=${ARGS_ARRAY[3]}
+
+scp -r -v -i $KEYPATH src $USERNAME@$IP:$HOMEDIR
