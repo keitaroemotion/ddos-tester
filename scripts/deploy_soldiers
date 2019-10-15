@@ -1,9 +1,19 @@
-ARGS=$(cat soldiers/config)
+set -e
+
+ARGS=$(cat config/bots.list)
 ARGS_ARRAY=($ARGS)
-echo "-------"
 USERNAME=${ARGS_ARRAY[0]}
 IP=${ARGS_ARRAY[1]}
 HOMEDIR=${ARGS_ARRAY[2]}
 KEYPATH=${ARGS_ARRAY[3]}
 
-scp -r -v -i $KEYPATH src $USERNAME@$IP:$HOMEDIR
+#ssh    -i $KEYPATH            $USERNAME@$IP "mkdir -p $HOMEDIR/camp"
+#scp -r -i $KEYPATH src        $USERNAME@$IP:$HOMEDIR/camp/src
+#scp -r -i $KEYPATH scripts    $USERNAME@$IP:$HOMEDIR/camp/scripts
+#scp -r -i $KEYPATH config     $USERNAME@$IP:$HOMEDIR/camp/config
+#scp -r -i $KEYPATH Cargo.toml $USERNAME@$IP:$HOMEDIR/camp/
+#ssh    -i $KEYPATH            $USERNAME@$IP "sudo curl https://sh.rustup.rs -sSf | sh -s -- -y"
+ssh    -i $KEYPATH            $USERNAME@$IP "sudo cp $HOMEDIR/.cargo/bin/cargo /usr/local/bin; sudo chmod +x /usr/local/bin"
+ssh    -i $KEYPATH            $USERNAME@$IP "cd $HOMEDIR/camp; sudo apt install libssl-dev -y;sudo rustup target add x86_64-unknown-linux-gnu; sudo cargo build --release --target=x86_64-unknown-linux-gnu"
+ssh    -i $KEYPATH            $USERNAME@$IP "cd $HOMEDIR/camp; mv target/debug/ddos-tester /usr/local/bin"
+#ssh    -i $KEYPATH            $USERNAME@$IP
