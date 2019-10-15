@@ -25,5 +25,3 @@ pub fn read_line(url: String) -> String {
 
     return s;
 }
-
-
