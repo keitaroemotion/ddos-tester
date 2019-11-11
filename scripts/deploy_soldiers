@@ -22,22 +22,17 @@ cat config/bots.list | while read -r line; do
         ssh -i $KEYPATH $USERNAME@$IP 'sudo apt-get install curl -y'
     fi
 
-    ssh -i $KEYPATH $USERNAME@$IP 'curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y'
-
     #
     # copy files (sources)
     #
+    scp -r -i $KEYPATH src        $USERNAME@$IP:$HOMEDIR/src
+    scp -r -i $KEYPATH scripts    $USERNAME@$IP:$HOMEDIR/scripts
+    scp    -i $KEYPATH Cargo.toml $USERNAME@$IP:$HOMEDIR
+
+    ssh -i $KEYPATH $USERNAME@$IP "curl -s https://static.rust-lang.org/rustup.sh | sh -s -- --channel=nightly"
+    ssh -i $KEYPATH $USERNAME@$IP "sudo apt-get install -y pkg-config"    
+    ssh -i $KEYPATH $USERNAME@$IP "cd $HOMEDIR; sudo apt install cargo -y; sudo apt install libssl-dev -y; sudo rustup target add x86_64-unknown-linux-gnu; sudo cargo build --release --target=x86_64-unknown-linux-gnu"
+
+    ssh -i $KEYPATH $USERNAME@$IP "cd $HOMEDIR;sudo  mv ./target/x86_64-unknown-linux-gnu/release/ddos-tester /usr/local/bin"
+    ssh -i $KEYPATH $USERNAME@$IP "sudo cp $HOMEDIR/.cargo/bin/cargo /usr/local/bin; sudo chmod +x /usr/local/bin"
 done
-
-exit
-
-#ssh    -i $KEYPATH            $USERNAME@$IP "mkdir -p $HOMEDIR/camp"
-#scp -r -i $KEYPATH src        $USERNAME@$IP:$HOMEDIR/camp/src
-#scp -r -i $KEYPATH scripts    $USERNAME@$IP:$HOMEDIR/camp/scripts
-#scp -r -i $KEYPATH config     $USERNAME@$IP:$HOMEDIR/camp/config
-#scp -r -i $KEYPATH Cargo.toml $USERNAME@$IP:$HOMEDIR/camp/
-#ssh    -i $KEYPATH            $USERNAME@$IP "sudo curl https://sh.rustup.rs -sSf | sh -s -- -y"
-ssh    -i $KEYPATH            $USERNAME@$IP "sudo cp $HOMEDIR/.cargo/bin/cargo /usr/local/bin; sudo chmod +x /usr/local/bin"
-ssh    -i $KEYPATH            $USERNAME@$IP "cd $HOMEDIR/camp; sudo apt install libssl-dev -y;sudo rustup target add x86_64-unknown-linux-gnu; sudo cargo build --release --target=x86_64-unknown-linux-gnu"
-ssh    -i $KEYPATH            $USERNAME@$IP "cd $HOMEDIR/camp; mv target/debug/ddos-tester /usr/local/bin"
-#ssh    -i $KEYPATH            $USERNAME@$IP
