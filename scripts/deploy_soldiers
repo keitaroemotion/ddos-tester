@@ -7,6 +7,30 @@ IP=${ARGS_ARRAY[1]}
 HOMEDIR=${ARGS_ARRAY[2]}
 KEYPATH=${ARGS_ARRAY[3]}
 
+cat config/bots.list | while read -r line; do
+    user=$(echo $line|awk '{print $1}')
+    ip=$(echo $line|awk '{print $2}')
+    homedir=$(echo $line|awk '{print $3}')
+    keydir=$(echo $line|awk '{print $4}')
+    echo "$user, $ip, $homedir, $keydir"
+
+    ssh -i $KEYPATH $USERNAME@$IP 'sudo apt-get update'
+    #
+    # install Rustup etc..
+    #
+    if [ -z $(which curl) ]; then
+        ssh -i $KEYPATH $USERNAME@$IP 'sudo apt-get install curl -y'
+    fi
+
+    ssh -i $KEYPATH $USERNAME@$IP 'curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y'
+
+    #
+    # copy files (sources)
+    #
+done
+
+exit
+
 #ssh    -i $KEYPATH            $USERNAME@$IP "mkdir -p $HOMEDIR/camp"
 #scp -r -i $KEYPATH src        $USERNAME@$IP:$HOMEDIR/camp/src
 #scp -r -i $KEYPATH scripts    $USERNAME@$IP:$HOMEDIR/camp/scripts
