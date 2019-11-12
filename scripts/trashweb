@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+PORT=$1
+
+if [ -z $PORT ]; then
+    printf "\nPort missing.\n\n"
+    exit
+fi
+
+python -m SimpleHTTPServer $PORT 
